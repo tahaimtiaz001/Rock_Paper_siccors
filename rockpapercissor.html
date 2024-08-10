@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <style>
+        body {
+            background-color: rgb(91, 91, 91);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+        button {
+            margin: 5px;
+            height: 70px;
+            width: 100px;
+            border-radius: 45%;
+            border: none;
+            background-color: black;
+            color: gray;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        button:hover {
+            color: white;
+            background-color: rgb(77, 62, 62);
+        }
+        h1 {
+            color: black;
+            margin-bottom: 20px;
+        }
+        #result {
+            font-size: 1.5em;
+            color: white;
+            margin-top: 20px;
+        }
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+            text-align: center;
+            z-index: 1000;
+        }
+        #overlay button {
+            margin-top: 20px;
+            background-color: white;
+            color: black;
+            border-radius: 5px;
+            padding: 10px ;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rock Paper Scissors</h1>
+    <button onclick="play('Rock')">Rock 🪨</button>
+    <button onclick="play('Paper')">Paper 📝</button>
+    <button onclick="play('Scissors')">Scissors ✂️</button>
+
+    <div id="result"></div>
+
+    <div id="overlay">
+        <div id="message"></div>
+        <button onclick="hideOverlay()">OK</button>
+    </div>
+
+    <script>
+        function play(playerChoice) {
+            const choices = ['Rock', 'Paper', 'Scissors'];
+            const randomIndex = Math.floor(Math.random() * 3);
+            const computerChoice = choices[randomIndex];
+            
+            let resultMessage;
+
+            if (playerChoice === computerChoice) {
+                resultMessage = `It's a tie! Both chose ${playerChoice}.`;
+            } else if (
+                (playerChoice === 'Rock' && computerChoice === 'Scissors') ||
+                (playerChoice === 'Paper' && computerChoice === 'Rock') ||
+                (playerChoice === 'Scissors' && computerChoice === 'Paper')
+            ) {
+                resultMessage = `You win! ${playerChoice} beats ${computerChoice}.`;
+            } else {
+                resultMessage = `You lose! ${computerChoice} beats ${playerChoice}.`;
+            }
+
+            // Update result display
+            document.getElementById('result').innerText = `Player Choice: ${playerChoice}\nComputer Choice: ${computerChoice}\n${resultMessage}`;
+
+            // Display the overlay
+            const overlay = document.getElementById('overlay');
+            const message = document.getElementById('message');
+            message.textContent = resultMessage;
+            overlay.style.display = 'flex';
+        }
+
+        function hideOverlay() {
+            // Hide the overlay
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
